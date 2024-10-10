@@ -8,7 +8,10 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
     return (
         <div>
             <Header />
-            {children}
+            <div className='mx-5 md:mx-20 lg:mx-36'>
+                {children}
+
+            </div>
         </div>
     );
 };
