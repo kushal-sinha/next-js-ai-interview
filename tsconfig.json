@@ -33,7 +33,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "utils/db.ts"
-  ],
+, "utils/GeminiAIModel.js"  ],
   "exclude": [
     "node_modules"
   ]

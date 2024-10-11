@@ -11,6 +11,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 
 function AddNewInterview() {
@@ -18,10 +19,18 @@ function AddNewInterview() {
     const [jobPosition, setJobPosition] = useState('');
     const [jobDescription, setJobDescription] = useState('');
     const [jobExperience, setJobExperience] = useState('');
+    const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY ?? (() => { throw new Error("Database URL is undefined"); })());
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-    const onsubmit = (e: any) => {
+
+    const onsubmit = async (e: any) => {
         e.preventDefault();
         console.log(jobPosition, jobDescription, jobExperience);
+
+        const InputPrompt = "Job position: " + jobPosition + " , Job Description:" + jobDescription + ",  Years of Experience:" + jobExperience + ", Depending on the Job Position , Job Description and years of Experience give top " + process.env.NEXT_AI_MOCK_INTERVIEW + " most important and most frequently asked questions in an interview along with answers in JSON format , Give questions and answer field on JSON";
+
+        const result = await model.generateContent(InputPrompt);
+        console.log(result.response.text());
     }
     return (
         <div>
