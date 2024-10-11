@@ -12,6 +12,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { Loader, LoaderCircle } from 'lucide-react';
+import { db } from '@/utils/db';
+import { MockInterview } from '@/utils/schema';
+import { v4 as uuidv4 } from 'uuid';
+import { useUser } from '@clerk/nextjs';
+import moment from 'moment';
+
 
 
 function AddNewInterview() {
@@ -19,18 +26,40 @@ function AddNewInterview() {
     const [jobPosition, setJobPosition] = useState('');
     const [jobDescription, setJobDescription] = useState('');
     const [jobExperience, setJobExperience] = useState('');
+    const [loading, setloading] = useState(false)
+    const [jsonRespose, setJsonResponse] = useState([]);
+    const { user } = useUser();
     const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY ?? (() => { throw new Error("Database URL is undefined"); })());
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 
-    const onsubmit = async (e: any) => {
+    const onsubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        setloading(true);
         e.preventDefault();
         console.log(jobPosition, jobDescription, jobExperience);
 
-        const InputPrompt = "Job position: " + jobPosition + " , Job Description:" + jobDescription + ",  Years of Experience:" + jobExperience + ", Depending on the Job Position , Job Description and years of Experience give top " + process.env.NEXT_AI_MOCK_INTERVIEW + " most important and most frequently asked questions in an interview along with answers in JSON format , Give questions and answer field on JSON";
+        const InputPrompt = "Job position: " + jobPosition + " , Job Description:" + jobDescription + ",  Years of Experience:" + jobExperience + ", Depending on the Job Position , Job Description and years of Experience give top " + process.env.NEXT_AI_MOCK_INTERVIEW + " most important and most frequently asked questions in an interview along with answers in JSON format , Give questions and answer field on JSON  give me the output in the proper JSON format with no syntax  issues that could cause problem when i parse it with JSON.parse remove the top ```json and the bottom ```json";
+
 
         const result = await model.generateContent(InputPrompt);
-        console.log(result.response.text());
+        const MockJsonResp = JSON.parse((result.response.text()));
+        setJsonResponse(MockJsonResp)
+        if (MockJsonResp) {
+            const resp = await db.insert(MockInterview).values({
+                mockId: uuidv4(),
+                jsonMockResp: JSON.stringify(MockJsonResp), // Ensure it is a string
+                jobPosition: jobPosition,
+                joDesc: jobDescription,
+                jobExperience: jobExperience,
+                createBy: user?.primaryEmailAddress?.emailAddress || 'unknown',
+                createdAt: moment().format('DD-MM-yyyy')
+            }).returning({ mockId: MockInterview.mockId });
+            console.log("Inserted ID", resp);
+        }
+        else {
+            console.log("Error");
+        }
+        setloading(false);
     }
     return (
         <div>
@@ -62,7 +91,8 @@ function AddNewInterview() {
                                 </div>
                                 <div className='  flex gap-5 justify-end'>
                                     <Button type='button' className='font-bold' variant="ghost" onClick={() => { setOpenDialog(false) }}>Cancel</Button>
-                                    <Button type='submit' className='font-bold' >Start InterView</Button>
+                                    <Button disabled={loading} type='submit' className='font-bold' >
+                                        {loading ? <> <LoaderCircle className='animate-spin' />'Generating from AI' </> : 'start InterView'}</Button>
                                 </div>
                             </form>
                         </DialogDescription>
