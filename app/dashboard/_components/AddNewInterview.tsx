@@ -18,6 +18,7 @@ import { MockInterview } from '@/utils/schema';
 import { v4 as uuidv4 } from 'uuid';
 import { useUser } from '@clerk/nextjs';
 import moment from 'moment';
+import { useRouter } from 'next/router';
 
 
 
@@ -28,6 +29,7 @@ function AddNewInterview() {
     const [jobExperience, setJobExperience] = useState('');
     const [loading, setloading] = useState(false)
     const [jsonRespose, setJsonResponse] = useState([]);
+    const router = useRouter()
     const { user } = useUser();
     const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY ?? (() => { throw new Error("Database URL is undefined"); })());
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
@@ -55,6 +57,10 @@ function AddNewInterview() {
                 createdAt: moment().format('DD-MM-yyyy')
             }).returning({ mockId: MockInterview.mockId });
             console.log("Inserted ID", resp);
+            if (resp) {
+                setOpenDialog(false);
+                router.push('/dashboard/interview/' + resp[0]?.mockId)
+            }
         }
         else {
             console.log("Error");
