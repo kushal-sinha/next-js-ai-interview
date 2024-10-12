@@ -18,7 +18,8 @@ interface InterViewProps {
 
 const Interview: React.FC<InterViewProps> = ({ params }) => {
     const [interviewData, setInterviewData] = useState<any>(null);
-    const [webCamEnable, setWebCamEnable] = useState(false)
+    const [webCamEnable, setWebCamEnable] = useState(false);
+
 
     useEffect(() => {
         console.log("InterView Id", params.interviewId)
