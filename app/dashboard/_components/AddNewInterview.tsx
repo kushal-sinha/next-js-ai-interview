@@ -40,8 +40,7 @@ function AddNewInterview() {
         e.preventDefault();
         console.log(jobPosition, jobDescription, jobExperience);
 
-        const InputPrompt = "Job position: " + jobPosition + " , Job Description:" + jobDescription + ",  Years of Experience:" + jobExperience + ", Depending on the Job Position , Job Description and years of Experience give top " + process.env.NEXT_AI_MOCK_INTERVIEW + " most important and most frequently asked questions in an interview along with answers in JSON format , Give questions and answer field on JSON  give me the output in the proper JSON format with no syntax  issues that could cause problem when i parse it with JSON.parse remove the top ```json and the bottom ```json";
-
+        const InputPrompt = `Job position: ${jobPosition}, Job Description: ${jobDescription}, Years of Experience: ${jobExperience}. Based on the job position, job description, and years of experience, provide exactly 10 of the most important and frequently asked interview questions, along with their answers, in JSON format. Make sure the output is properly formatted JSON with no syntax issues that could cause problems during parsing. Remove the \`\`\`json block if present.`;
 
         const result = await model.generateContent(InputPrompt);
         const MockJsonResp = JSON.parse((result.response.text()));

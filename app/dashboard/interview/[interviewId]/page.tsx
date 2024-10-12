@@ -6,6 +6,7 @@ import { eq } from 'drizzle-orm';
 import { Lightbulb, WebcamIcon } from 'lucide-react';
 import Webcam from "react-webcam";
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 
 interface InterViewProps {
@@ -71,7 +72,9 @@ const Interview: React.FC<InterViewProps> = ({ params }) => {
                         </>
                     )}
                     {/* Place Start button below webcam */}
-                    <Button className='mt-5'>Start Interview</Button>
+                    <Link href={'/dashboard/interview/' + params.interviewId + '/start'}>
+                        <Button className='mt-5'>Start Interview</Button>
+                    </Link>
                 </div>
             </div>
 
