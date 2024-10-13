@@ -59,8 +59,7 @@ const RecordAnswerSection: React.FC<InterViewQuestionProps> = ({ mockInterviewQu
                 "The response should include two fields: 'rating' and 'feedback', and keep the feedback concise (3 to 5 lines).";
 
             const result = await model.generateContent(feedbackPrompt);
-            const MockJsonResp = JSON.parse((result.response.text()));
-            console.log(MockJsonResp)
+            const JsonFeedbackResp = JSON.parse((result.response.text()));
         } else {
             startSpeechToText();
         }

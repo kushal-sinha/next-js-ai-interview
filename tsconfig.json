@@ -32,8 +32,10 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "utils/db.ts"
-, "utils/GeminiAIModel.js"  ],
+    "utils/db.ts",
+    "utils/GeminiAIModel.js",
+    "drizzle.config.ts"
+  ],
   "exclude": [
     "node_modules"
   ]
