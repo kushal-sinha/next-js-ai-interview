@@ -4,6 +4,7 @@ import { MockInterview } from '@/utils/schema';
 import React, { useEffect, useState } from 'react';
 import { eq } from 'drizzle-orm';
 import QuestionSection from "./_components/QuestionsSection"
+import RecordAnswerSection from './_components/RecordAnswerSection';
 
 
 interface InterViewProps {
@@ -40,12 +41,13 @@ const StartInterView: React.FC<InterViewProps> = ({ params }) => {
 
     return (
         <div>
-            <div className='grid grid-cols-1 md:grid-cols-2'>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>
                 {/* Questions */}
                 <QuestionSection mockInterviewQuestion={mockInterviewQuestion}
                     activeQuestionIndex={activeQuestionIndex} />
 
                 {/* Video/Audio Recording */}
+                <RecordAnswerSection />
             </div>
         </div>
     );

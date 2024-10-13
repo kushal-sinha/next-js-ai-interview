@@ -17,7 +17,7 @@ const QuestionsSection: React.FC<InterViewQuestionProps> = ({ mockInterviewQuest
                 {Array.isArray(mockInterviewQuestion) && mockInterviewQuestion.length > 0 ? (
                     mockInterviewQuestion.map((item, index) => (
                         <div key={index}>
-                            <h2 className={`p-2 bg-secondary rounded-full text-xs md:text-sm text-center cursor-pointer ${activeQuestionIndex === index ? 'bg-blue-500  text-white' : ''}`}>
+                            <h2 className={`p-2 bg-secondary rounded-full text-xs md:text-sm text-center cursor-pointer ${activeQuestionIndex === index ? 'bg-blue-600 text-white' : ''}`}>
                                 Question #{index + 1}
                             </h2>
                         </div>
