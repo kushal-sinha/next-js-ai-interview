@@ -49,7 +49,8 @@ const StartInterView: React.FC<InterViewProps> = ({ params }) => {
                 {/* Video/Audio Recording */}
                 <RecordAnswerSection
                     mockInterviewQuestion={mockInterviewQuestion}
-                    activeQuestionIndex={activeQuestionIndex} />
+                    activeQuestionIndex={activeQuestionIndex}
+                    interviewData={interviewData} />
             </div>
         </div>
     );
