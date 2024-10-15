@@ -42,6 +42,7 @@ const RecordAnswerSection: React.FC<InterViewQuestionProps> = ({ mockInterviewQu
         results,
         startSpeechToText,
         stopSpeechToText,
+        setResults,
     } = useSpeechToText({
         continuous: true,
         useLegacyResults: false
@@ -100,8 +101,10 @@ const RecordAnswerSection: React.FC<InterViewQuestionProps> = ({ mockInterviewQu
 
         if (resp) {
             toast('User Answer recorded successfully');
+            setUserAnswer('');
+            setResults([]);
         }
-        setUserAnswer('');
+        setResults([]);
         setloading(false);
     }
 
@@ -122,7 +125,6 @@ const RecordAnswerSection: React.FC<InterViewQuestionProps> = ({ mockInterviewQu
             <Button disabled={loading} variant="outline" className='my-10 font-bold' onClick={StartStopRecording}>
                 {isRecording ? <h2 className='text-red-600 flex gap-2'><StopCircle />Stop Recording</h2> : <h2 className='text-blue-600 flex gap-2 items-center'><Mic /> Record Answer</h2>}
             </Button>
-            <Button onClick={() => console.log(userAnswer)}>Show user answer</Button>
         </div>
     );
 }

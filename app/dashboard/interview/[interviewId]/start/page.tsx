@@ -6,6 +6,7 @@ import { eq } from 'drizzle-orm';
 import QuestionSection from "./_components/QuestionsSection"
 import RecordAnswerSection from './_components/RecordAnswerSection';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 
 interface InterViewProps {
@@ -53,7 +54,13 @@ const StartInterView: React.FC<InterViewProps> = ({ params }) => {
                     activeQuestionIndex={activeQuestionIndex}
                     interviewData={interviewData} />
             </div>
-            <div className='flex justify-end gap-6'>                 {activeQuestionIndex > 0 && <Button className='hover:text-lg' onClick={() => setActiveQuestionIndex(activeQuestionIndex - 1)}>Previous Question</Button>}                 {activeQuestionIndex != mockInterviewQuestion.length - 1 && <Button className='hover:text-lg' onClick={() => setActiveQuestionIndex(activeQuestionIndex + 1)}>Next Question</Button>}                 {activeQuestionIndex === mockInterviewQuestion.length - 1 && <Button className='hover:text-lg'>End Interview</Button>}             </div>
+            <div className='flex justify-end gap-6'>
+                {activeQuestionIndex > 0 && <Button className='hover:text-lg' onClick={() => setActiveQuestionIndex(activeQuestionIndex - 1)}>Previous Question</Button>}
+                {activeQuestionIndex != mockInterviewQuestion.length - 1 && <Button className='hover:text-lg' onClick={() => setActiveQuestionIndex(activeQuestionIndex + 1)}>Next Question</Button>}
+                <Link href={'/dashboard/interview/' + interviewData?.mockId + "/feedback"}>
+                    {activeQuestionIndex === mockInterviewQuestion.length - 1 && <Button className='hover:text-lg'>End Interview</Button>}
+                </Link>
+            </div>
         </div>
     );
 };
