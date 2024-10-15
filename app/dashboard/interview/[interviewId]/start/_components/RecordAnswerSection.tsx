@@ -56,6 +56,7 @@ const RecordAnswerSection: React.FC<InterViewQuestionProps> = ({ mockInterviewQu
     useEffect(() => {
         const combinedResults = (results as ResultType[]).map((result) => result?.transcript).join(' ');
         setUserAnswer(combinedResults);
+        console.log("useranser", userAnswer);
     }, [results]);
     useEffect(() => {
         if (!isRecording && userAnswer.length > 10) {
@@ -121,6 +122,7 @@ const RecordAnswerSection: React.FC<InterViewQuestionProps> = ({ mockInterviewQu
             <Button disabled={loading} variant="outline" className='my-10 font-bold' onClick={StartStopRecording}>
                 {isRecording ? <h2 className='text-red-600 flex gap-2'><StopCircle />Stop Recording</h2> : <h2 className='text-blue-600 flex gap-2 items-center'><Mic /> Record Answer</h2>}
             </Button>
+            <Button onClick={() => console.log(userAnswer)}>Show user answer</Button>
         </div>
     );
 }
