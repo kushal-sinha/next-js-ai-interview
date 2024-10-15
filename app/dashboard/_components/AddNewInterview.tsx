@@ -40,9 +40,10 @@ function AddNewInterview() {
         e.preventDefault();
         console.log(jobPosition, jobDescription, jobExperience);
 
-        const InputPrompt = `Job position: ${jobPosition}, Job Description: ${jobDescription}, Years of Experience: ${jobExperience}. Based on the job position, job description, and years of experience, provide exactly 10 of the most important and frequently asked interview questions, along with their answers, in JSON format. Make sure the output is properly formatted JSON with no syntax issues that could cause problems during parsing. Remove the \`\`\`json block if present.`;
-
-        const result = await model.generateContent(InputPrompt);
+        const inputPrompt = `Job position: ${jobPosition}, Job Description: ${jobDescription}, Years of Experience: ${jobExperience}. 
+Based on the job position, job description, and years of experience, provide exactly 10 of the most important and frequently asked interview questions along with their answers in JSON format. 
+Do not include any formatting markers, headers, or quotes like '\`\`\`' or '\`\`\`json'. Just provide the plain JSON output.`;
+        const result = await model.generateContent(inputPrompt);
         const MockJsonResp = JSON.parse((result.response.text()));
         setJsonResponse(MockJsonResp)
         if (MockJsonResp) {
