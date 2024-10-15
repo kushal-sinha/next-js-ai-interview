@@ -65,8 +65,7 @@ export default function Page() {
                             </h1>
 
                             <p className="mt-4 leading-relaxed text-gray-500">
-                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi nam dolorum aliquam,
-                                quibusdam aperiam voluptatum.
+                                "Prepare for your dream job with AI Interview Mocker, a cutting-edge platform built to simulate real-life interviews. Get instant feedback, improve your skills, and boost your confidence with personalized AI-driven mock interviews!"
                             </p>
                         </div>
                         <SignIn />
